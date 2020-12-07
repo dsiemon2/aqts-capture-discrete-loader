@@ -10,46 +10,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
-
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonToken;
-import java.io.IOException;
-import java.io.StringWriter;
-import java.util.ArrayList;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonToken;
-import org.springframework.util.StringUtils;
-
-import java.io.IOException;
-import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.amazonaws.services.sns.AmazonSNS;
-import com.amazonaws.services.sns.AmazonSNSClientBuilder;
-import com.amazonaws.services.sns.model.ListTopicsRequest;
-import com.amazonaws.services.sns.model.ListTopicsResult;
-import com.amazonaws.services.sns.model.PublishRequest;
-import com.amazonaws.services.sns.model.Topic;
-
-
-
 /**
  * Applies business rules to a domain object.
  * It is assumed that this object can be modified.
  */
 public class DiscreteGroundWaterRules {
 	@Autowired
-	protected SnsUtil snsUtil;
+	protected SnSUtil snsUtil;
 	@Autowired
 	protected Properties properties;
 	//Threadsafe factory
@@ -86,7 +53,8 @@ public class DiscreteGroundWaterRules {
 			String qualStr = domObj.getReadingQualifiers();
 
 			qualStr = StringUtils.trimWhitespace(qualStr);
-
+			mess = "recoverable-data-warnings";
+			snsUtil.publishSNSMessage("ERROR: " + mess + qualStr);
 			if (! StringUtils.isEmpty(qualStr)) {
 				try {
 
@@ -123,7 +91,7 @@ public class DiscreteGroundWaterRules {
 
 					domObj.setReadingQualifiers(qualStr);
 				} catch (IOException e) {
-					mess = "empty RDB file created.";
+					mess = "recoverable-data-warnings";
 					snsUtil.publishSNSMessage("ERROR: " + mess + qualStr);
 					throw new RuntimeException(e);
 				}

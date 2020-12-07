@@ -42,8 +42,8 @@ public class SnSUtil {
 	@Autowired
 	SnSUtil(Properties properties) {
 		this.properties = properties;
-		this.snsTopic = getSNSTopic();
-		//this.snsTopicName = getSecret(TOPIC_NAME);
+		//this.snsTopic = getSNSTopic();
+		this.snsTopic = getSecret(TOPIC_NAME);
 		
 	}
 
