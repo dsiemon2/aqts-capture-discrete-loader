@@ -3,3 +3,5 @@ ignore:
   - "**/Application.java"
   # SpringBootRequestHandler -  no testable logic
   - "**/LoadDiscreteGroundWaterHandler.java"
+  # Spring Properties POJO -  no testable logic
+  - "**/Properties.java"
