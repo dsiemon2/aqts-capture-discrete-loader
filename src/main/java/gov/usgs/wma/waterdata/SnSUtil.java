@@ -11,10 +11,11 @@ import com.amazonaws.services.sns.model.ListTopicsResult;
 import com.amazonaws.services.sns.model.PublishRequest;
 import com.amazonaws.services.sns.model.Topic;
 import java.util.Base64;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
-
 
 
 /**
@@ -27,6 +28,7 @@ public class SnSUtil {
 	private static final String TOPIC_NAME = "SNS-WARNING-TOPIC-" + appState;
 	private final AmazonSNS snsClient = AmazonSNSClientBuilder.defaultClient();
 	private final Topic snsTopic;
+	private static final Logger logger = LoggerFactory.getLogger(LoadDiscreteGroundWater.class);
 	//private final String snsTopicName;
 	private Properties properties;
 
