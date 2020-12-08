@@ -98,10 +98,9 @@ public class SnSUtil {
 	}
 
     private Topic getSecret(String topicName) {
-
 		String secretName = topicName;
 		String region = "us-west-2";
-
+		System.out.println("Entered Get Secret");
 		// Create a Secrets Manager client
 		AWSSecretsManager client  = AWSSecretsManagerClientBuilder.standard()
 										.withRegion(region)
