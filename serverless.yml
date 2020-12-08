@@ -41,7 +41,7 @@ custom:
     index: ${self:service}
     retentionInDays: 90
     filterPattern: '?Exception ?ERROR ?WARN'
-  SNSWarningTopic: ${ssm:/aws/reference/secretsmanager/SNS-WARNING-TOPIC-${self:provider.stage}}
+  SNSWarningTopic: ${ssm:/aws/reference/secretsmanager/SNS-WARNING-TOPIC-${self:provider.stage}-true}
 functions:
   loadDiscrete:
     handler: gov.usgs.wma.waterdata.LoadDiscreteGroundWaterHandler
