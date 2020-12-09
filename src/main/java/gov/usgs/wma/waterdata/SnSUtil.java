@@ -127,7 +127,7 @@ public class SnSUtil {
 		if (getSecretValueResult.getSecretString() != null) {
 			secret = getSecretValueResult.getSecretString();
 			System.err.println("Get Secret return" + secret);
-			logger.Debug("Get Secret return" + secret);
+			logger.debug("Get Secret return" + secret);
 			SecretArn.setTopicArn(secret);
 		}
 		else {
