@@ -125,7 +125,7 @@ public class SnSUtil {
 		// Depending on whether the secret is a string or binary, one of these fields will be populated.
 		if (getSecretValueResult.getSecretString() != null) {
 			secret = getSecretValueResult.getSecretString();
-			System.err.println("Get Secret return" + secret);
+			System.out.println("Get Secret return" + secret);
 			//logger.debug("Get Secret return" + secret);
 			snsTopic= new Topic();
 			snsTopic.setTopicArn(secret);
