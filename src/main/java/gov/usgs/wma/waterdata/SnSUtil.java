@@ -9,6 +9,7 @@ import com.amazonaws.services.sns.AmazonSNSClientBuilder;
 import com.amazonaws.services.sns.model.ListTopicsRequest;
 import com.amazonaws.services.sns.model.ListTopicsResult;
 import com.amazonaws.services.sns.model.PublishRequest;
+import com.amazonaws.services.sns.model.PublishResult;
 import com.amazonaws.services.sns.model.Topic;
 import java.util.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +51,8 @@ public class SnSUtil {
 			try {
 				PublishRequest request = new PublishRequest(snsTopic.getTopicArn(), mess);
 				System.out.println("returned arn: " + snsTopic.getTopicArn());
-				snsClient.publish(request);
+				PublishResult publishResult = snsClient.publish(request);
+				System.out.println(publishResult.toString());
 				System.out.println("INFO: Message published to SNS: " + mess);
 			} catch (Exception e) {
 				System.err.print("Error publishing message to SNS topic: " + e.getMessage());
