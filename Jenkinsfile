@@ -43,7 +43,7 @@ pipeline {
                     }
                 }
         sh '''
-          curl ${SHADED_JAR_ARTIFACT_URL} -Lo aqts-capture-discrete-loader-aws-iow-743.jar
+          curl ${SHADED_JAR_ARTIFACT_URL} -Lo aqts-capture-discrete-loader-aws.jar
           ls -al
           npm install
           ls -al
