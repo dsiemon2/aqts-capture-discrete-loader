@@ -1,4 +1,4 @@
-service: aqts-capture-discrete-loader
+service: aqts-capture-discrete-loader-iow-743
 snsTopicWarning: SNS-WARNING-TOPIC
 
 provider:
@@ -127,4 +127,4 @@ plugins:
   - serverless-es-logs
 
 package:
-  artifact: aqts-capture-discrete-loader-aws.jar
+  artifact: aqts-capture-discrete-loader-aws-iow-743.jar
