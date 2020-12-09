@@ -22,7 +22,6 @@ public class LoadDiscreteGroundWater implements Function<RequestObject, ResultOb
 
 	@Autowired
 	protected SnSUtil snsUtil;
-	@Autowired
 
 	@Autowired
 	public LoadDiscreteGroundWater(TransformDao transformDao, ObservationDao observationDao) {
