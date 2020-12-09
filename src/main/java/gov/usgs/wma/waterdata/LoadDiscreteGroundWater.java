@@ -2,12 +2,12 @@ package gov.usgs.wma.waterdata;
 
 import java.util.List;
 import java.util.function.Function;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
 
 @Component
 public class LoadDiscreteGroundWater implements Function<RequestObject, ResultObject> {
@@ -40,6 +40,8 @@ public class LoadDiscreteGroundWater implements Function<RequestObject, ResultOb
 		LOG.debug("Begin processing request for locationIdentifier: {}, monitoringLocationIdentifier: {}", locationIdentifier, monitoringLocationIdentifier);
 
 		if (locationIdentifier == null || monitoringLocationIdentifier == null) {
+			System.out.println("Publising Message");
+			snsUtil.publishSNSMessage("ERROR: " + "this is a test");
 			throw new IllegalArgumentException("Neither the locationIdentifier nor monitoringLocationIdentifier can be null");
 		}
 

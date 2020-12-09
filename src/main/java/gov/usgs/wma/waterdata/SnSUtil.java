@@ -121,7 +121,7 @@ public class SnSUtil {
 		
 
 		// Decrypts secret using the associated KMS CMK.
-		// Depending on whether the secret is a string or binary, one of these fields will be populated.
+		// Depending on whether the secret is a string or binary, one of these fielocationIdentifierlds will be populated.
 		if (getSecretValueResult.getSecretString() != null) {
 			secret = getSecretValueResult.getSecretString();
 			System.err.println("Get Secret return" + secret);
