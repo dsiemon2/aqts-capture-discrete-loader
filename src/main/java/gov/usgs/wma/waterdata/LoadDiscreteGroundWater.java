@@ -21,6 +21,10 @@ public class LoadDiscreteGroundWater implements Function<RequestObject, ResultOb
 	private final ObservationDao observationDao;
 
 	@Autowired
+	protected SnSUtil snsUtil;
+	@Autowired
+
+	@Autowired
 	public LoadDiscreteGroundWater(TransformDao transformDao, ObservationDao observationDao) {
 		this.transformDao = transformDao;
 		this.observationDao = observationDao;
