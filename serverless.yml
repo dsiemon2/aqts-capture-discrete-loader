@@ -74,6 +74,11 @@ resources:
       Properties:
         DisplayName: ${self:service}-${self:provider.stage}-topic
         TopicName: ${self:service}-${self:provider.stage}-topic
+    snsTopicWarning:
+      Type: AWS::SNS::Topic
+      Properties:
+        DisplayName: ${self:snsTopicWarning}-topic-${self:provider.stage}
+        TopicName: ${self:snsTopicWarning}-topic-${self:provider.stage}
     concurrencyAlarm:
       Type: AWS::CloudWatch::Alarm
       Properties:
