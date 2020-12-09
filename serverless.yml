@@ -38,7 +38,7 @@ custom:
     connectInfo: ${ssm:/aws/reference/secretsmanager/WQP-EXTERNAL-${self:provider.stage}~true}
   esLogs:
     endpoint: ${ssm:/iow/aws/vpc/${self:provider.stage}/elasticsearchEndpoint}
-    index: ${self:service}
+    index: ${self:service}SNSWarningTopic
     retentionInDays: 90
     filterPattern: '?Exception ?ERROR ?WARN'
   SNSWarningTopic: ${ssm:/aws/reference/secretsmanager/SNS-WARNING-TOPIC-${self:provider.stage}~true}
@@ -77,8 +77,8 @@ resources:
     snsTopicWarning:
       Type: AWS::SNS::Topic
       Properties:
-        DisplayName: ${self:snsTopicWarning}-topic-${self:provider.stage}
-        TopicName: ${self:snsTopicWarning}-topic-${self:provider.stage}
+        DisplayName: SNS-WARNING-TOPIC-topic-${self:provider.stage}
+        TopicName: SNS-WARNING-TOPIC-topic-${self:provider.stage}
     concurrencyAlarm:
       Type: AWS::CloudWatch::Alarm
       Properties:
