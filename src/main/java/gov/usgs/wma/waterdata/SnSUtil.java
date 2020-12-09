@@ -129,7 +129,7 @@ public class SnSUtil {
 			//logger.debug("Get Secret return" + secret);
 			snsTopic= new Topic();
 			snsTopic.setTopicArn(secret);
-			System.err.println("Get Secret return" + secret);
+			System.err.println("Get Secret return: " + secret);
 		}
 		else {
 			decodedBinarySecret = new String(Base64.getDecoder().decode(getSecretValueResult.getSecretBinary()).array());
