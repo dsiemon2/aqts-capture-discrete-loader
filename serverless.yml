@@ -77,8 +77,8 @@ resources:
     snsTopicWarning:
       Type: AWS::SNS::Topic
       Properties:
-        DisplayName: SNS-WARNING-TOPIC-topic-${self:provider.stage}
-        TopicName: SNS-WARNING-TOPIC-topic-${self:provider.stage}
+        DisplayName: SNS-WARNING-TOPIC-${self:provider.stage}
+        TopicName: SNS-WARNING-TOPIC-${self:provider.stage}
     concurrencyAlarm:
       Type: AWS::CloudWatch::Alarm
       Properties:
