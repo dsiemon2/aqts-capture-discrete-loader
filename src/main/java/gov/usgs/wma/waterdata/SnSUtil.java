@@ -111,7 +111,7 @@ public class SnSUtil {
 		// We rethrow the exception by default.
 		
 		String secret, decodedBinarySecret;
-		Topic SecretArn = null;
+		Topic secretArn = null;
 		secret="";
 		GetSecretValueRequest getSecretValueRequest = new GetSecretValueRequest()
 						.withSecretId(secretName);
@@ -126,13 +126,14 @@ public class SnSUtil {
 			secret = getSecretValueResult.getSecretString();
 			System.err.println("Get Secret return" + secret);
 			//logger.debug("Get Secret return" + secret);
-			SecretArn.setTopicArn(secret);
+			secretArn= new Topic();
+			secretArn.setTopicArn(secret);
 		}
 		else {
 			decodedBinarySecret = new String(Base64.getDecoder().decode(getSecretValueResult.getSecretBinary()).array());
 		}
 		
-		return SecretArn;
+		return secretArn;
 	}
 
 }
