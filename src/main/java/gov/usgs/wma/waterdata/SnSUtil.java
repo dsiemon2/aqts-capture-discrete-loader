@@ -112,6 +112,7 @@ public class SnSUtil {
 		
 		String secret, decodedBinarySecret;
 		Topic secretArn = null;
+		Topic snsTopic = null;
 		secret="";
 		GetSecretValueRequest getSecretValueRequest = new GetSecretValueRequest()
 						.withSecretId(secretName);
@@ -126,15 +127,15 @@ public class SnSUtil {
 			secret = getSecretValueResult.getSecretString();
 			System.err.println("Get Secret return" + secret);
 			//logger.debug("Get Secret return" + secret);
-			secretArn= new Topic();
-			secretArn.setTopicArn(secret);
+			snsTopic= new Topic();
+			snsTopic.setTopicArn(secret);
 			System.err.println("Get Secret return" + secret);
 		}
 		else {
 			decodedBinarySecret = new String(Base64.getDecoder().decode(getSecretValueResult.getSecretBinary()).array());
 		}
 		
-		return secretArn;
+		return snsTopic;
 	}
 
 }
