@@ -10,7 +10,6 @@ import com.amazonaws.services.sns.model.PublishRequest;
 import com.amazonaws.services.sns.model.PublishResult;
 import com.amazonaws.services.sns.model.Topic;
 import java.util.Base64;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 
@@ -26,9 +25,8 @@ public class SnSUtil {
 	private final Topic snsTopic;
 	//private static final Logger logger = LoggerFactory.getLogger(LoadDiscreteGroundWater.class);
 	//private final String snsTopicName;
-	private Properties properties;
 
-	@Autowired
+
 	SnSUtil() {
 		//this.snsTopic = getSNSTopic();
 		this.snsTopic = getSecret(TOPIC_NAME);
