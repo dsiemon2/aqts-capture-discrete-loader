@@ -42,6 +42,7 @@ custom:
     retentionInDays: 90
     filterPattern: '?Exception ?ERROR ?WARN'
   SNSWarningTopic: ${ssm:/aws/reference/secretsmanager/SNS-WARNING-TOPIC-${self:provider.stage}~true}
+  
 functions:
   loadDiscrete:
     handler: gov.usgs.wma.waterdata.LoadDiscreteGroundWaterHandler
@@ -121,6 +122,13 @@ resources:
         QueueName: ${self:service}-log-${self:provider.stage}
         MessageRetentionPeriod: 1209600
         VisibilityTimeout : 360
+    logQueueSnsSubscription:
+      Type: AWS::SNS::Subscription
+      Properties:
+        Endpoint: dsiemon2@gmail.com
+        Protocol: Email
+        RawMessageDelivery: true
+        TopicArn: !GetAtt snsTopicWarning.Arn
 
 plugins:
   - serverless-plugin-git-variables
