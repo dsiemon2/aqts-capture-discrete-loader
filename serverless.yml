@@ -37,12 +37,11 @@ custom:
     connectInfo: ${ssm:/aws/reference/secretsmanager/WQP-EXTERNAL-${self:provider.stage}~true}
   esLogs:
     endpoint: ${ssm:/iow/aws/vpc/${self:provider.stage}/elasticsearchEndpoint}
-    index: ${self:service}SNSWarningTopic
+    index: ${self:service}
     retentionInDays: 90
     filterPattern: '?Exception ?ERROR ?WARN'
   accountNumber : ${ssm:/iow/aws/accountNumber}
-  SNSWarningTopic: ${ssm:/aws/reference/secretsmanager/SNS-WARNING-TOPIC-${self:provider.stage}~true}
-  SNSLogTopicArn: arn:aws:sns:${self:provider.region}:${self:custom.accountNumber}:SNS-WARNING-TOPIC-${self:provider.stage}
+  SNSLogTopicArn: ${ssm:/aws/reference/secretsmanager/SNS-WARNING-TOPIC-${self:provider.stage}~true}
   
 functions:
   loadDiscrete:
