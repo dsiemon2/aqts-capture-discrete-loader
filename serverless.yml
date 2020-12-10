@@ -127,8 +127,8 @@ resources:
     SnsLogSubscription:
       Type: AWS::SNS::Subscription
       Properties:
-        Endpoint: dsiemon2@gmail.com
-        Protocol: ${self:custom.SNSLogEmail}
+        Endpoint: ${self:custom.SNSLogEmail}
+        Protocol: Email
         TopicArn: ${self:custom.SNSLogTopicArn}
 
 plugins:
