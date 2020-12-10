@@ -11,6 +11,7 @@ import com.amazonaws.services.sns.model.PublishResult;
 import com.amazonaws.services.sns.model.Topic;
 import java.util.Base64;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 
 /**
@@ -21,6 +22,7 @@ public class SnSUtil {
 	private static final String appState = "TEST";
 	private static final String TOPIC_BASE_NAME = "SNS-WARNING-";
 	private static final String TOPIC_NAME = "SNS-WARNING-TOPIC-" + appState;
+	private static final String SNS_TOPIC_ENV = "ATQS_CAPTURE_SNS_LOG_ARN";
 	private final AmazonSNS snsClient = AmazonSNSClientBuilder.defaultClient();
 	private final Topic snsTopic;
 	//private static final Logger logger = LoggerFactory.getLogger(LoadDiscreteGroundWater.class);
@@ -29,7 +31,7 @@ public class SnSUtil {
 
 	SnSUtil() {
 		//this.snsTopic = getSNSTopic();
-		this.snsTopic = getSecret(TOPIC_NAME);
+		//this.snsTopic = getSecret(TOPIC_NAME);
 		
 	}
 
@@ -41,10 +43,11 @@ public class SnSUtil {
 	 * @param mess The message to place in the SNS topic.
 	 */
 	public void publishSNSMessage(String mess) {
-		if (snsTopic != null) {
+		String snsArn = System.getenv(SNS_TOPIC_ENV);
+		if (StringUtils.hasText(snsArn)) {
 			try {
-				PublishRequest request = new PublishRequest(snsTopic.getTopicArn(), mess);
-				System.out.println("returned arn: " + snsTopic.getTopicArn());
+				PublishRequest request = new PublishRequest(snsArn, mess);
+				System.out.println("returned arn: " + snsArn);
 				PublishResult publishResult = snsClient.publish(request);
 				System.out.println(publishResult.toString());
 				System.out.println("INFO: Message published to SNS: " + mess);
@@ -54,7 +57,7 @@ public class SnSUtil {
 				e.printStackTrace();
 			}
 		} else {
-			System.err.print("Error SNS logging not initialized, message to have been sent: " + mess);
+			System.err.print("Error SNS Topic not set, message to have been sent: " + mess);
 		}
 	}
 

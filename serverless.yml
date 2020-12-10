@@ -42,7 +42,7 @@ custom:
     filterPattern: '?Exception ?ERROR ?WARN'
   accountNumber : ${ssm:/iow/aws/accountNumber}
   SNSWarningTopic: ${ssm:/aws/reference/secretsmanager/SNS-WARNING-TOPIC-${self:provider.stage}~true}
-  SNStopicArn: arn:aws:sns:${self:provider.region}:${self:custom.accountNumber}:SNS-WARNING-TOPIC-${self:provider.stage}
+  SNSLogTopicArn: arn:aws:sns:${self:provider.region}:${self:custom.accountNumber}:SNS-WARNING-TOPIC-${self:provider.stage}
   
 functions:
   loadDiscrete:
@@ -67,6 +67,7 @@ functions:
       OBSERVATION_SCHEMA_NAME: ${self:custom.observationDb.connectInfo.NWIS_SCHEMA_NAME}
       OBSERVATION_SCHEMA_OWNER_USERNAME: ${self:custom.observationDb.connectInfo.NWIS_SCHEMA_OWNER_USERNAME}
       OBSERVATION_SCHEMA_OWNER_PASSWORD: ${self:custom.observationDb.connectInfo.NWIS_SCHEMA_OWNER_PASSWORD}
+      ATQS_CAPTURE_SNS_LOG_ARN: ${self:custom.SNSLogTopicArn}
       ROOT_LOG_LEVEL: INFO
 
 resources:
@@ -128,7 +129,7 @@ resources:
       Properties:
         Endpoint: dsiemon2@gmail.com
         Protocol: Email
-        TopicArn: ${self:custom.SNStopicArn}
+        TopicArn: ${self:custom.SNSLogTopicArn}
 
 plugins:
   - serverless-plugin-git-variables
