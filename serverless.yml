@@ -1,6 +1,5 @@
 service: aqts-capture-discrete-loader
 snsTopicWarning: SNS-WARNING-TOPIC
-
 provider:
   name: aws
   rolePermissionsBoundary:
@@ -41,7 +40,9 @@ custom:
     index: ${self:service}SNSWarningTopic
     retentionInDays: 90
     filterPattern: '?Exception ?ERROR ?WARN'
+  accountNumber : ${ssm:/iow/aws/accountNumber}
   SNSWarningTopic: ${ssm:/aws/reference/secretsmanager/SNS-WARNING-TOPIC-${self:provider.stage}~true}
+  SNStopicArn: arn:aws:sns:${self:provider.region}:${self:custom.accountNumber}:SNS-WARNING-TOPIC-${self:provider.stage}
   
 functions:
   loadDiscrete:
@@ -128,7 +129,7 @@ resources:
         Endpoint: dsiemon2@gmail.com
         Protocol: Email
         RawMessageDelivery: true
-        TopicArn: !GetAtt snsTopicWarning.Arn
+        TopicArn: ${self:custom.SNStopicArn}
 
 plugins:
   - serverless-plugin-git-variables
