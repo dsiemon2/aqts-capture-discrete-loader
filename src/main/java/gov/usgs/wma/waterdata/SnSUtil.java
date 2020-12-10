@@ -1,15 +1,9 @@
 package gov.usgs.wma.waterdata;
 
-import com.amazonaws.services.secretsmanager.AWSSecretsManager;
-import com.amazonaws.services.secretsmanager.AWSSecretsManagerClientBuilder;
-import com.amazonaws.services.secretsmanager.model.GetSecretValueRequest;
-import com.amazonaws.services.secretsmanager.model.GetSecretValueResult;
 import com.amazonaws.services.sns.AmazonSNS;
 import com.amazonaws.services.sns.AmazonSNSClientBuilder;
 import com.amazonaws.services.sns.model.PublishRequest;
 import com.amazonaws.services.sns.model.PublishResult;
-import com.amazonaws.services.sns.model.Topic;
-import java.util.Base64;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -24,15 +18,11 @@ public class SnSUtil {
 	private static final String TOPIC_NAME = "SNS-WARNING-TOPIC-" + appState;
 	private static final String SNS_TOPIC_ENV = "ATQS_CAPTURE_SNS_LOG_ARN";
 	private final AmazonSNS snsClient = AmazonSNSClientBuilder.defaultClient();
-	private final Topic snsTopic;
-	//private static final Logger logger = LoggerFactory.getLogger(LoadDiscreteGroundWater.class);
-	//private final String snsTopicName;
+
 
 
 	SnSUtil() {
-		//this.snsTopic = getSNSTopic();
-		//this.snsTopic = getSecret(TOPIC_NAME);
-		
+
 	}
 
 	/**
@@ -61,45 +51,5 @@ public class SnSUtil {
 		}
 	}
 
-    private Topic getSecret(String topicName) {
-		String secretName = topicName;
-		String region = "us-west-2";
-		System.out.println("Entered Get Secret");
-		// Create a Secrets Manager client
-		AWSSecretsManager client  = AWSSecretsManagerClientBuilder.standard()
-										.withRegion(region)
-										.build();
-		
-		// In this sample we only handle the specific exceptions for the 'GetSecretValue' API.
-		// See https://docs.aws.amazon.com/secretsmanager/latest/astatepireference/API_GetSecretValue.html
-		// We rethrow the exception by default.
-		
-		String secret, decodedBinarySecret;
-		Topic secretArn = null;
-		Topic snsTopic = null;
-		secret="";
-		GetSecretValueRequest getSecretValueRequest = new GetSecretValueRequest()
-						.withSecretId(secretName);
-		GetSecretValueResult getSecretValueResult = null;
-
-		getSecretValueResult = client.getSecretValue(getSecretValueRequest);
-		
-
-		// Decrypts secret using the associated KMS CMK.
-		// Depending on whether the secret is a string or binary, one of these fields will be populated.
-		if (getSecretValueResult.getSecretString() != null) {
-			secret = getSecretValueResult.getSecretString();
-			System.out.println("Get Secret return" + secret);
-			//logger.debug("Get Secret return" + secret);
-			snsTopic= new Topic();
-			snsTopic.setTopicArn(secret);
-			System.err.println("Get Secret return: " + secret);
-		}
-		else {
-			decodedBinarySecret = new String(Base64.getDecoder().decode(getSecretValueResult.getSecretBinary()).array());
-		}
-		
-		return snsTopic;
-	}
 
 }
