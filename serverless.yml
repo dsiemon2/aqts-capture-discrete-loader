@@ -1,5 +1,5 @@
 service: aqts-capture-discrete-loader
-snsTopicWarning: SNS-WARNING-TOPIC
+
 provider:
   name: aws
   rolePermissionsBoundary:
@@ -41,7 +41,8 @@ custom:
     retentionInDays: 90
     filterPattern: '?Exception ?ERROR ?WARN'
   accountNumber : ${ssm:/iow/aws/accountNumber}
-  SNSLogTopicArn: ${ssm:/aws/reference/secretsmanager/SNS-WARNING-TOPIC-${self:provider.stage}~true}
+  SNSLogTopicArn: ${ssm:/aws/reference/secretsmanager/AQTS-CAPTURE-SNS-LOG-TOPIC-${self:provider.stage}~true}
+  SNSLogEmail: ${ssm:/aws/reference/secretsmanager/AQTS-CAPTURE-SNS-LOG-EMAIL-${self:provider.stage}~true}
   
 functions:
   loadDiscrete:
@@ -76,11 +77,11 @@ resources:
       Properties:
         DisplayName: ${self:service}-${self:provider.stage}-topic
         TopicName: ${self:service}-${self:provider.stage}-topic
-    snsTopicWarning:
+    snsLogTopic:
       Type: AWS::SNS::Topic
       Properties:
-        DisplayName: SNS-WARNING-TOPIC-${self:provider.stage}
-        TopicName: SNS-WARNING-TOPIC-${self:provider.stage}
+        DisplayName: AQTS-CAPTURE-SNS_LOG-TOPIC-${self:provider.stage}
+        TopicName: AQTS-CAPTURE-SNS_LOG-TOPIC-${self:provider.stage}
     concurrencyAlarm:
       Type: AWS::CloudWatch::Alarm
       Properties:
@@ -123,11 +124,11 @@ resources:
         QueueName: ${self:service}-log-${self:provider.stage}
         MessageRetentionPeriod: 1209600
         VisibilityTimeout : 360
-    logQueueSnsSubscription:
+    SnsLogSubscription:
       Type: AWS::SNS::Subscription
       Properties:
         Endpoint: dsiemon2@gmail.com
-        Protocol: Email
+        Protocol: ${self:custom.SNSLogEmail}
         TopicArn: ${self:custom.SNSLogTopicArn}
 
 plugins:
