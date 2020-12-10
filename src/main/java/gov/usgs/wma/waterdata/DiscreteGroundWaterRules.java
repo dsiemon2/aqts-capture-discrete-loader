@@ -17,8 +17,6 @@ import org.springframework.util.StringUtils;
 public class DiscreteGroundWaterRules {
 	@Autowired
 	protected SnSUtil snsUtil;
-	@Autowired
-	protected Properties properties;
 	//Threadsafe factory
 	private static final JsonFactory jsonFactory = new JsonFactory();
 	

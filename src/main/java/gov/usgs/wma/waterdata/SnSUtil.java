@@ -6,15 +6,12 @@ import com.amazonaws.services.secretsmanager.model.GetSecretValueRequest;
 import com.amazonaws.services.secretsmanager.model.GetSecretValueResult;
 import com.amazonaws.services.sns.AmazonSNS;
 import com.amazonaws.services.sns.AmazonSNSClientBuilder;
-import com.amazonaws.services.sns.model.ListTopicsRequest;
-import com.amazonaws.services.sns.model.ListTopicsResult;
 import com.amazonaws.services.sns.model.PublishRequest;
 import com.amazonaws.services.sns.model.PublishResult;
 import com.amazonaws.services.sns.model.Topic;
 import java.util.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 
 /**
@@ -32,8 +29,7 @@ public class SnSUtil {
 	private Properties properties;
 
 	@Autowired
-	SnSUtil(Properties properties) {
-		this.properties = properties;
+	SnSUtil() {
 		//this.snsTopic = getSNSTopic();
 		this.snsTopic = getSecret(TOPIC_NAME);
 		
@@ -62,42 +58,6 @@ public class SnSUtil {
 		} else {
 			System.err.print("Error SNS logging not initialized, message to have been sent: " + mess);
 		}
-	}
-
-	private Topic getSNSTopic() {
-		Topic snsTopic = null;
-		String tier = properties == null ? null : properties.getTier();
-		String mess = "";
-
-		if (StringUtils.hasText(tier)) {
-			try {
-				String topicName = String.format("%s-%s-topic", TOPIC_BASE_NAME, tier);
-				ListTopicsRequest request = new ListTopicsRequest();
-
-				ListTopicsResult result = snsClient.listTopics(request);
-				for (Topic topic : result.getTopics()) {
-					String arn = topic.getTopicArn();
-					System.err.println("ARN = " + arn);
-					if (arn != null && arn.contains(topicName)) {
-						snsTopic = topic;
-						break;
-					}
-				}
-
-				if (snsTopic == null) {
-					System.err.println("Error initializing SNS logging: SNS topic not found: " + topicName);
-				}
-			} catch (Exception e) {
-				System.err.println("Error getting SNS topic: " + e.getMessage());
-				e.printStackTrace();
-			}
-		} else {
-			// Todo: use logging framework
-			mess = properties == null ? "properties component not available" : "tier property not set";
-			System.err.print("Error initializing SNS logging: " + mess);
-		}
-
-		return snsTopic;
 	}
 
     private Topic getSecret(String topicName) {
