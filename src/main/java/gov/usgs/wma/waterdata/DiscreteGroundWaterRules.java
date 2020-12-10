@@ -51,7 +51,7 @@ public class DiscreteGroundWaterRules {
 
 			qualStr = StringUtils.trimWhitespace(qualStr);
 			mess = "recoverable-data-warnings";
-			snsUtil.publishSNSMessage("ERROR: this is a test message - Descrete Ground Water Rules");
+			snsUtil.publishSNSMessage("ERROR:" + " this is a test message - Descrete Ground Water Rules");
 			if (! StringUtils.isEmpty(qualStr)) {
 				try {
 
