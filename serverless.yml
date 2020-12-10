@@ -80,8 +80,8 @@ resources:
     snsLogTopic:
       Type: AWS::SNS::Topic
       Properties:
-        DisplayName: AQTS-CAPTURE-SNS_LOG-TOPIC-${self:provider.stage}
-        TopicName: AQTS-CAPTURE-SNS_LOG-TOPIC-${self:provider.stage}
+        DisplayName: AQTS-CAPTURE-SNS-LOG-TOPIC-${self:provider.stage}
+        TopicName: AQTS-CAPTURE-SNS-LOG-TOPIC-${self:provider.stage}
     concurrencyAlarm:
       Type: AWS::CloudWatch::Alarm
       Properties:
