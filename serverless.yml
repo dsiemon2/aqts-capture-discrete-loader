@@ -128,7 +128,6 @@ resources:
       Properties:
         Endpoint: dsiemon2@gmail.com
         Protocol: Email
-        RawMessageDelivery: false
         TopicArn: ${self:custom.SNStopicArn}
 
 plugins:
