@@ -15,10 +15,11 @@ import org.springframework.util.StringUtils;
  * It is assumed that this object can be modified.
  */
 public class DiscreteGroundWaterRules {
+	
+	private static final JsonFactory jsonFactory = new JsonFactory();
+	//Threadsafe factory
 	@Autowired
 	protected SnSUtil snsUtil;
-	//Threadsafe factory
-	private static final JsonFactory jsonFactory = new JsonFactory();
 	
 
 	/**
