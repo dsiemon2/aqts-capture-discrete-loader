@@ -44,7 +44,7 @@ public class LoadDiscreteGroundWater implements Function<RequestObject, ResultOb
 
 		if (locationIdentifier == null || monitoringLocationIdentifier == null) {
 		//	System.err.println("Publising Message");
-			snsUtil.publishSNSMessage("ERROR: " + "this is a test message");
+			snsUtil.publishSNSMessage("ERROR: " + "this is a test message- Load Descrete Ground Water ");
 			throw new IllegalArgumentException("Neither the locationIdentifier nor monitoringLocationIdentifier can be null");
 		}
 
