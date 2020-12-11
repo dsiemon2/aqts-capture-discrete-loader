@@ -3,12 +3,14 @@ import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
-import gov.usgs.wma.waterdata.SnSUtil;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.util.StringUtils;
+//import gov.usgs.wma.waterdata.SnSUtil;
 /**
  * Applies business rules to a domain object.
  * It is assumed that this object can be modified.
@@ -17,6 +19,8 @@ public class DiscreteGroundWaterRules {
 	
 	private static final JsonFactory jsonFactory = new JsonFactory();
 	//Threadsafe factory
+	@Autowired
+	@Qualifier("SnSUtil")
 	protected SnSUtil snsUtil;
 	
 
@@ -51,7 +55,7 @@ public class DiscreteGroundWaterRules {
 
 			qualStr = StringUtils.trimWhitespace(qualStr);
 			mess = "recoverable-data-warnings";
-			snsUtil = new SnSUtil();
+			//snsUtil = new SnSUtil();
 			snsUtil.publishSNSMessage("ERROR:" + " this is a test message - Descrete Ground Water Rules");
 			if (! StringUtils.isEmpty(qualStr)) {
 				try {
