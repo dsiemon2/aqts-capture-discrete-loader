@@ -4,6 +4,7 @@ import com.amazonaws.services.sns.AmazonSNS;
 import com.amazonaws.services.sns.AmazonSNSClientBuilder;
 import com.amazonaws.services.sns.model.PublishRequest;
 import com.amazonaws.services.sns.model.PublishResult;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -20,7 +21,7 @@ public class SnSUtil {
 	private final AmazonSNS snsClient = AmazonSNSClientBuilder.defaultClient();
 
 
-
+	@Autowired
 	SnSUtil() {
 
 	}
