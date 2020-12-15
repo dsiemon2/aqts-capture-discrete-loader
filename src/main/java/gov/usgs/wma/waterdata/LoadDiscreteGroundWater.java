@@ -21,9 +21,6 @@ public class LoadDiscreteGroundWater implements Function<RequestObject, ResultOb
 	private final ObservationDao observationDao;
 
 	@Autowired
-	protected SnSUtil snsUtil;
-
-	@Autowired
 	public LoadDiscreteGroundWater(TransformDao transformDao, ObservationDao observationDao) {
 		this.transformDao = transformDao;
 		this.observationDao = observationDao;
@@ -43,8 +40,6 @@ public class LoadDiscreteGroundWater implements Function<RequestObject, ResultOb
 		LOG.debug("Begin processing request for locationIdentifier: {}, monitoringLocationIdentifier: {}", locationIdentifier, monitoringLocationIdentifier);
 
 		if (locationIdentifier == null || monitoringLocationIdentifier == null) {
-		//	System.err.println("Publising Message");
-			snsUtil.publishSNSMessage("ERROR: " + "this is a test message- Load Descrete Ground Water ");
 			throw new IllegalArgumentException("Neither the locationIdentifier nor monitoringLocationIdentifier can be null");
 		}
 

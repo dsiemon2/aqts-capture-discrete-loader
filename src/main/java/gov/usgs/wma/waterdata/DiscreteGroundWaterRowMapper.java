@@ -2,15 +2,19 @@ package gov.usgs.wma.waterdata;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Component;
 
+@Component
 public class DiscreteGroundWaterRowMapper implements RowMapper<DiscreteGroundWater> {
-
+	@Autowired
+	public DiscreteGroundWaterRules rules;
 	@Override
 	public DiscreteGroundWater mapRow(ResultSet rs, int rowNum) throws SQLException {
-
-		DiscreteGroundWaterRules rules = new DiscreteGroundWaterRules();
+		System.out.println("rules= " + rules);
+		
+		//DiscreteGroundWaterRules rules = new DiscreteGroundWaterRules();
 		DiscreteGroundWater discreteGroundWater = new DiscreteGroundWater();
 
 		discreteGroundWater.setFieldVisitIdentifier(rs.getString("field_visit_identifier"));

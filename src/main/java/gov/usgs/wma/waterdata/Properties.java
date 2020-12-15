@@ -9,7 +9,7 @@ public class Properties {
 	String tier;
 	String bucket;
 	String region;
-	String arn;
+	String snsTopicArn;
 
 	public String getTier() {
 		return tier;
@@ -35,11 +35,11 @@ public class Properties {
 		this.region = region;
 	}
 
-	public String getArn() {
-		return arn;
+	public String getSnsTopicArn() {
+		return snsTopicArn;
 	}
 
-	public void setArn(String arn) {
-		this.arn = arn;
+	public void setSnsTopicArn(String snsTopicArn) {
+		this.snsTopicArn = snsTopicArn;
 	}
 }

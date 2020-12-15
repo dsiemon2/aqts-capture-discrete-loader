@@ -8,14 +8,16 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
-//import gov.usgs.wma.waterdata.SnSUtil;
+
 /**
  * Applies business rules to a domain object.
  * It is assumed that this object can be modified.
  */
+@Component
 public class DiscreteGroundWaterRules {
-	
+
 	private static final JsonFactory jsonFactory = new JsonFactory();
 	//Threadsafe factory
 	@Autowired
@@ -52,9 +54,6 @@ public class DiscreteGroundWaterRules {
 			String qualStr = domObj.getReadingQualifiers();
 
 			qualStr = StringUtils.trimWhitespace(qualStr);
-			mess = "recoverable-data-warnings";
-			snsUtil = new SnSUtil();
-			snsUtil.publishSNSMessage("ERROR:" + " this is a test message - Descrete Ground Water Rules");
 			if (! StringUtils.isEmpty(qualStr)) {
 				try {
 
@@ -91,7 +90,7 @@ public class DiscreteGroundWaterRules {
 
 					domObj.setReadingQualifiers(qualStr);
 				} catch (IOException e) {
-					mess = "recoverable-data-warnings";
+					mess = "recoverable-data-warnings: ";
 					snsUtil.publishSNSMessage("ERROR: " + mess + qualStr);
 					throw new RuntimeException(e);
 				}

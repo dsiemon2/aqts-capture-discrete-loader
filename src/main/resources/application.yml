@@ -12,6 +12,9 @@ spring:
     hikari:
       maximum-pool-size: 2
       auto-commit: false
+  properties: 
+    arn: ${OPENSHIFT_MYSQL_DB_HOST}
+    snsTopicArn: ${ATQS_CAPTURE_SNS_LOG_ARN}
 
 logging:
   level:

@@ -41,8 +41,8 @@ custom:
     retentionInDays: 90
     filterPattern: '?Exception ?ERROR ?WARN'
   accountNumber : ${ssm:/iow/aws/accountNumber}
-  SNSLogTopicArn: ${ssm:/aws/reference/secretsmanager/AQTS-CAPTURE-SNS-LOG-TOPIC-${self:provider.stage}~true}
-  SNSLogEmail: ${ssm:/aws/reference/secretsmanager/AQTS-CAPTURE-SNS-LOG-EMAIL-${self:provider.stage}~true}
+  snsLogTopicArn: ${ssm:/aws/reference/secretsmanager/AQTS-CAPTURE-SNS-LOG-TOPIC-${self:provider.stage}~true}
+  snsLogEmail: ${ssm:/aws/reference/secretsmanager/AQTS-CAPTURE-SNS-LOG-EMAIL-${self:provider.stage}~true}
   
 functions:
   loadDiscrete:
@@ -67,7 +67,7 @@ functions:
       OBSERVATION_SCHEMA_NAME: ${self:custom.observationDb.connectInfo.NWIS_SCHEMA_NAME}
       OBSERVATION_SCHEMA_OWNER_USERNAME: ${self:custom.observationDb.connectInfo.NWIS_SCHEMA_OWNER_USERNAME}
       OBSERVATION_SCHEMA_OWNER_PASSWORD: ${self:custom.observationDb.connectInfo.NWIS_SCHEMA_OWNER_PASSWORD}
-      ATQS_CAPTURE_SNS_LOG_ARN: ${self:custom.SNSLogTopicArn}
+      ATQS_CAPTURE_SNS_LOG_ARN: ${self:custom.snsLogTopicArn}
       ROOT_LOG_LEVEL: INFO
 
 resources:
@@ -127,9 +127,9 @@ resources:
     SnsLogSubscription:
       Type: AWS::SNS::Subscription
       Properties:
-        Endpoint: ${self:custom.SNSLogEmail}
+        Endpoint: ${self:custom.snsLogEmail}
         Protocol: Email
-        TopicArn: ${self:custom.SNSLogTopicArn}
+        TopicArn: ${self:custom.snsLogTopicArn}
 
 plugins:
   - serverless-plugin-git-variables

@@ -4,8 +4,12 @@ import com.github.springtestdbunit.annotation.ExpectedDatabase;
 import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
+
+import com.amazonaws.services.sns.AmazonSNS;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -15,7 +19,11 @@ import static org.junit.jupiter.api.Assertions.*;
 			DBTestConfig.class,
 			LoadDiscreteGroundWater.class,
 			TransformDao.class,
-			ObservationDao.class})
+			ObservationDao.class, 
+			DiscreteGroundWaterRules.class, 
+			SnSUtil.class,
+			Properties.class,
+			AmazonSNS.class})
 @DatabaseSetup(
 		connection="transform",
 		value="classpath:/testData/transformDb/")
@@ -27,7 +35,9 @@ import static org.junit.jupiter.api.Assertions.*;
 		value="classpath:/testData/sitefile/")
 @ActiveProfiles("it")
 public class LoadDiscreteGroundWaterIT extends BaseTestDao {
-
+	@MockBean
+	@Qualifier("AmazonSNS")
+	public AmazonSNS snsClient;
 	@Autowired
 	public LoadDiscreteGroundWater loadDiscreteGroundWater;
 

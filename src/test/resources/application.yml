@@ -11,8 +11,10 @@ spring:
     password: ${OBSERVATION_SCHEMA_OWNER_PASSWORD}
     hikari:
       maximum-pool-size: 2
+properties:
+  snsTopicArn: testArn
 
 logging:
   level:
-    org.postgresql: DEBUG
+    org.postgresql: INFO
     com.zaxxer: OFF

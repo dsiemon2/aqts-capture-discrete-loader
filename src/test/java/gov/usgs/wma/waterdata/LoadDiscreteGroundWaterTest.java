@@ -2,8 +2,12 @@ package gov.usgs.wma.waterdata;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+
+import com.amazonaws.services.sns.AmazonSNS;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +18,11 @@ import static org.mockito.Mockito.when;
 
 @SpringBootTest
 public class LoadDiscreteGroundWaterTest {
-
+	@MockBean
+	@Qualifier("AmazonSNS")
+	public AmazonSNS snsClient;
+	@Autowired
+	protected SnSUtil snsUtil;
 	@MockBean
 	private ObservationDao observationDao;
 	@MockBean

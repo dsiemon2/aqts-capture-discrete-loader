@@ -2,13 +2,26 @@ package gov.usgs.wma.waterdata;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+
+import com.amazonaws.services.sns.AmazonSNS;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest
 class DiscreteGroundWaterRulesTest {
-
+	@MockBean
+	@Qualifier("AmazonSNS")
+	public AmazonSNS snsClient;
+	@Autowired
+	private DiscreteGroundWaterRules rules;
 	DiscreteGroundWater dga;
-	DiscreteGroundWaterRules rules = new DiscreteGroundWaterRules();
+	//DiscreteGroundWaterRules rules = new DiscreteGroundWaterRules();
+
 
 	@BeforeEach
 	void setUp() {
@@ -19,7 +32,7 @@ class DiscreteGroundWaterRulesTest {
 	void recognizedFieldVisitCommentsShouldParseToCorrectDateTimeAccuracyCode() {
 
 		dga.setFieldVisitComments(DateTimeAccuracy.HOUR.getMatchString());
-
+		
 		rules.apply(dga);
 
 		assertEquals(DateTimeAccuracy.HOUR.getCode(), dga.getDateTimeAccuracyCode());

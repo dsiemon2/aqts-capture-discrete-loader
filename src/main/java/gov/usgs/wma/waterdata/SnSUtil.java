@@ -4,6 +4,7 @@ import com.amazonaws.services.sns.AmazonSNS;
 import com.amazonaws.services.sns.AmazonSNSClientBuilder;
 import com.amazonaws.services.sns.model.PublishRequest;
 import com.amazonaws.services.sns.model.PublishResult;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -18,12 +19,13 @@ public class SnSUtil {
 	private static final String TOPIC_BASE_NAME = "SNS-WARNING-";
 	private static final String TOPIC_NAME = "SNS-WARNING-TOPIC-" + appState;
 	private static final String SNS_TOPIC_ENV = "ATQS_CAPTURE_SNS_LOG_ARN";
-	private final AmazonSNS snsClient = AmazonSNSClientBuilder.defaultClient();
-
-
 	@Autowired
-	SnSUtil() {
+	private Properties properties;
+	@Autowired
+	private AmazonSNS snsClient;
 
+	SnSUtil(Properties properties) {
+		this.properties = properties;
 	}
 
 	/**
@@ -34,13 +36,18 @@ public class SnSUtil {
 	 * @param mess The message to place in the SNS topic.
 	 */
 	public void publishSNSMessage(String mess) {
-		String snsArn = System.getenv(SNS_TOPIC_ENV);
+		String snsArn = properties.getSnsTopicArn();
+	//	String snsArn = System.getenv(SNS_TOPIC_ENV);
+		System.out.println("Properties=" + snsArn);
+		System.out.println("snsClient=" + snsClient);
+		System.out.println("get class: " + snsClient.getClass());
+		
 		if (StringUtils.hasText(snsArn)) {
 			try {
+				//snsClient= AmazonSNSClientBuilder.defaultClient();
 				PublishRequest request = new PublishRequest(snsArn, mess);
-				System.out.println("returned arn: " + snsArn);
 				PublishResult publishResult = snsClient.publish(request);
-				System.out.println(publishResult.toString());
+				//System.out.println(publishResult.toString());
 				System.out.println("INFO: Message published to SNS: " + mess);
 			} catch (Exception e) {
 				System.err.print("Error publishing message to SNS topic: " + e.getMessage());
