@@ -14,16 +14,18 @@ import com.github.springtestdbunit.annotation.DatabaseSetup;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.NONE,
-		classes={
-			DBTestConfig.class,
-			LoadDiscreteGroundWater.class,
-			TransformDao.class,
-			ObservationDao.class, 
-			DiscreteGroundWaterRules.class, 
-			SnSUtil.class,
-			Properties.class,
-			AmazonSNS.class})
+@SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.MOCK,
+               classes={
+                       DBTestConfig.class,
+                       LoadDiscreteGroundWater.class,
+                       TransformDao.class,
+                       ObservationDao.class,
+                       DiscreteGroundWaterRules.class,
+                       DiscreteGroundWaterRowMapper.class,
+                       SnSUtil.class,
+                       Properties.class,
+                       SpringConfig.class,
+                       AmazonSNS.class})
 @DatabaseSetup(
 		connection="transform",
 		value="classpath:/testData/transformDb/")
@@ -36,8 +38,12 @@ import static org.junit.jupiter.api.Assertions.*;
 @ActiveProfiles("it")
 public class LoadDiscreteGroundWaterIT extends BaseTestDao {
 	@MockBean
-	@Qualifier("AmazonSNS")
+	@Qualifier("amazonSNS")
 	public AmazonSNS snsClient;
+
+	@Autowired
+	public DiscreteGroundWaterRules discreteGroundWaterRules;
+
 	@Autowired
 	public LoadDiscreteGroundWater loadDiscreteGroundWater;
 

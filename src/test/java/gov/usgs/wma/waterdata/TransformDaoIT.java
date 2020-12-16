@@ -9,18 +9,32 @@ import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
+
+import com.amazonaws.services.sns.AmazonSNS;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 
-@SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.NONE,
-		classes={
-			DBTestConfig.class,
-			TransformDao.class})
+@SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.MOCK,
+                classes={
+                        DBTestConfig.class,
+                        TransformDao.class,
+                        DiscreteGroundWaterRules.class,
+                        DiscreteGroundWaterRowMapper.class,
+                        SnSUtil.class,
+                        Properties.class,
+                        SpringConfig.class})
 @DatabaseSetup("classpath:/testData/transformDb/")
 @ActiveProfiles("it")
 public class TransformDaoIT extends BaseTestDao {
+	@MockBean
+	@Qualifier("amazonSNS")
+	private AmazonSNS snsClient;
 
 	@Autowired
 	public TransformDao transformDao;

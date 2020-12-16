@@ -92,20 +92,10 @@
         </dependency>
         <dependency>
             <groupId>com.amazonaws</groupId>
-            <artifactId>aws-java-sdk-s3</artifactId>
-            <version>1.11.911</version>
-        </dependency>
-        <dependency>
-            <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk-sns</artifactId>
             <version>1.11.908</version>
         </dependency>
-		 <dependency>
-            <groupId>com.amazonaws</groupId>
-            <artifactId>aws-java-sdk-secretsmanager</artifactId>
-             <version>1.11.314</version>
-        </dependency>
-        
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
@@ -264,7 +254,7 @@
                                     <port>${LOCAL_TRANSFORM_TESTING_DATABASE_PORT}:5432</port>
                                 </ports>
                                 <wait>
-                                    <time>150000</time>
+                                    <time>180000</time>
                                     <log>(?s)PostgreSQL init process complete; ready for start up.*database system is ready to accept connections</log>
                                 </wait>
                             </run>
@@ -282,7 +272,7 @@
                                     <port>${LOCAL_OBSERVATION_TESTING_DATABASE_PORT}:5432</port>
                                 </ports>
                                 <wait>
-                                    <time>150000</time>
+                                    <time>180000</time>
                                     <log>(?s)PostgreSQL init process complete; ready for start up.*database system is ready to accept connections</log>
                                 </wait>
                             </run>

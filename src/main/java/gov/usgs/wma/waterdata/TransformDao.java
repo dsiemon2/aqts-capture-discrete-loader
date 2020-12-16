@@ -19,6 +19,9 @@ public class TransformDao {
 	private static final Logger LOG = LoggerFactory.getLogger(TransformDao.class);
 
 	@Autowired
+	private DiscreteGroundWaterRowMapper discreteGroundWaterRowMapper;
+
+	@Autowired
 	@Qualifier("jdbcTemplateTransform")
 	protected JdbcTemplate jdbcTemplate;
 
@@ -31,7 +34,7 @@ public class TransformDao {
 			String sql = new String(FileCopyUtils.copyToByteArray(selectQuery.getInputStream()));
 			rtn = jdbcTemplate.query(
 					sql,
-					new DiscreteGroundWaterRowMapper(),
+					discreteGroundWaterRowMapper,
 					locationIdentifier
 					);
 		} catch (IOException e) {

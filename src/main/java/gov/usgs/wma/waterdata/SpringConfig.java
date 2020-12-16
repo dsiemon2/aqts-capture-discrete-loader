@@ -11,8 +11,8 @@ import com.amazonaws.services.sns.AmazonSNSClientBuilder;
 @Configuration
 public class SpringConfig {
 	@Bean
-	@Qualifier("AmazonSNS")
-    public AmazonSNS snsClient() {
+	@Qualifier("amazonSNS")
+	public AmazonSNS snsClient() {
 		return AmazonSNSClientBuilder.defaultClient();
 	}
 }

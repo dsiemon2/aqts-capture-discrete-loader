@@ -43,7 +43,7 @@ custom:
   accountNumber : ${ssm:/iow/aws/accountNumber}
   snsLogTopicArn: ${ssm:/aws/reference/secretsmanager/AQTS-CAPTURE-SNS-LOG-TOPIC-${self:provider.stage}~true}
   snsLogEmail: ${ssm:/aws/reference/secretsmanager/AQTS-CAPTURE-SNS-LOG-EMAIL-${self:provider.stage}~true}
-  
+
 functions:
   loadDiscrete:
     handler: gov.usgs.wma.waterdata.LoadDiscreteGroundWaterHandler

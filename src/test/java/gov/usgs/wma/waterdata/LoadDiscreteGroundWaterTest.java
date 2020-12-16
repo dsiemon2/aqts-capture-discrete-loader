@@ -19,7 +19,7 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 public class LoadDiscreteGroundWaterTest {
 	@MockBean
-	@Qualifier("AmazonSNS")
+	@Qualifier("amazonSNS")
 	public AmazonSNS snsClient;
 	@Autowired
 	protected SnSUtil snsUtil;

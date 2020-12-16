@@ -22,7 +22,7 @@ public class DiscreteGroundWaterRules {
 	//Threadsafe factory
 	@Autowired
 	protected SnSUtil snsUtil;
-	
+
 
 	/**
 	 * Apply business rules to a DiscreteGroundWater, modifying it in place.
@@ -90,7 +90,7 @@ public class DiscreteGroundWaterRules {
 
 					domObj.setReadingQualifiers(qualStr);
 				} catch (IOException e) {
-					mess = "recoverable-data-warnings: ";
+					mess = "IOException applying groundwater rules: " + e.getMessage();
 					snsUtil.publishSNSMessage("ERROR: " + mess + qualStr);
 					throw new RuntimeException(e);
 				}
@@ -100,6 +100,4 @@ public class DiscreteGroundWaterRules {
 
 		}
 	}
-
-	
 }

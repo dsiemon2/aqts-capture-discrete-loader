@@ -15,13 +15,12 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class DiscreteGroundWaterRulesTest {
 	@MockBean
-	@Qualifier("AmazonSNS")
+	@Qualifier("amazonSNS")
 	public AmazonSNS snsClient;
+
 	@Autowired
 	private DiscreteGroundWaterRules rules;
 	DiscreteGroundWater dga;
-	//DiscreteGroundWaterRules rules = new DiscreteGroundWaterRules();
-
 
 	@BeforeEach
 	void setUp() {
@@ -32,7 +31,7 @@ class DiscreteGroundWaterRulesTest {
 	void recognizedFieldVisitCommentsShouldParseToCorrectDateTimeAccuracyCode() {
 
 		dga.setFieldVisitComments(DateTimeAccuracy.HOUR.getMatchString());
-		
+
 		rules.apply(dga);
 
 		assertEquals(DateTimeAccuracy.HOUR.getCode(), dga.getDateTimeAccuracyCode());
