@@ -3,12 +3,14 @@ package gov.usgs.wma.waterdata;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import com.amazonaws.services.sns.AmazonSNS;
+import com.amazonaws.services.sns.model.PublishRequest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -209,8 +211,13 @@ class DiscreteGroundWaterRulesTest {
 
 		RuntimeException e = assertThrows(RuntimeException.class, () -> {
 			rules.apply(dga);
+			
 		});
-
+		String topicArn = "testArn";
+		String message="ERROR: IOException applying groundwater rules: Unrecognized token 'I': was expecting (JSON String, Number, Array, Object or token 'null', 'true' or 'false')\n";
+		String newQualstr =" at [Source: (String)\"I am not Json\"; line: 1, column: 2]I am not Json";
+		PublishRequest request = new PublishRequest(topicArn, message  + newQualstr);
+		Mockito.verify(snsClient, Mockito.times(1)).publish(request);
 	}
 
 
